@@ -1,0 +1,30 @@
+https://sundog-education.com/machine-learning/
+
+conda path : /anaconda3/bin
+jupyter notebook : cd '/Users/yogwalia/Desktop/Data Science/1. Machine Learning and Deep Learning with Python - Frank Kane/MLCourse'
+
+Section 1: Getting Started
+-------------------------------------------------
+1. Anaconda Distribution : Python/R IDE (Integrated Development Environment) - Used for Data Science, Machine Learning and Deep Learning Techniques.
+2. conda install pydotplus : Used to visualise decision trees.
+3. conda install tensorflow : Used to create deep neural networks.
+4. jupyter notebook : Used to open ipynb (Interactive Python NoteBook) files on web browser within a folder.
+5. pandas [Panel Data] : Python Library used to handle tabular data (Load, Clean, Manipulate) creating 'dataframes' and 'series'.
+6. numpy [Numerical Python] : Python library used to create N-Dimensional arrays.
+7. sklearn or scikit_learn : Python Machine Learning Library used to train the models or algorithms.
+
+Tabular Data -> pandas (Load, Clean, Manipulate) -> Transform -> numpy array -> input -> sklearn or scikit_learn
+
+------------------------------------------
+------------------------------------------
+
+
+Section 2: Statistics And Probability Refresher, Python Practice
+-------------------------------------------------
+1. Types Of Data : Numerical [Discrete or Continuous], Categorical and Ordinal
+2. Mean, Median And Mode : Median is less susceptible [Harmfully Impacted] than Mean if an outlier is added.
+3. Variance And Standard Deviation : Two fundamental quantities which measures the spread of the data distribution.
+4. Variance [Population Or Sample] : Measures How 'Spread-Out' The Data Is. Average Of The Squared Difference From The Mean.
+5. Standard Deviation : Square Root Of The Variance. It is used to examine how 'extreme' or 'far' the data point is from the mean.
+6. Probability Density Function [Continuous Data] : Gives the Probability of a data point falling within some given range of a given value.
+7. Probability Mass Function [Discrete Data] : Gives the Probability of a data point having non-range value.
