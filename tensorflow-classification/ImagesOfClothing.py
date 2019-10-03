@@ -24,14 +24,14 @@ testing_dataset = dataset['test']
 class_names = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat',
                'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
 
-# step 3 is explore the training dataset
+# step 3 is explore the dataset
 training_num_examples = metadata.splits['train'].num_examples
 testing_num_examples = metadata.splits['test'].num_examples
 
 print("training examples count is {}, testing examples count is {}".format(training_num_examples, testing_num_examples))
 
 
-# step 4 is pre-processing the data
+# step 4 is pre-processing the data in the dataset
 def normalize(image, label):
     return (tf.cast(image, tf.float32) / 255), label
 
@@ -77,8 +77,70 @@ print("Finished Model Training...")
 # step 9 is evaluating the accuracy
 test_loss, test_accuracy = model.evaluate(testing_dataset, steps=math.ceil(testing_num_examples / BATCH_SIZE))
 print("test loss is {}, test accuracy is {}".format(test_loss, test_accuracy))
-print("test accuracy % is {0:.2f}".format(test_accuracy * 100))
+print("test accuracy % is {:.2f}".format(test_accuracy * 100))
 
-# step 10 is predicting values using trained model
-# step 11 is exploring the layer weights
-print("These are the layer variables (weights and biases): {}".format(l0.get_weights()))
+# step 10 is predict image class and explore
+for test_images, test_labels in testing_dataset.take(1):
+    test_images = test_images.numpy()
+    test_labels = test_labels.numpy()
+    predictions = model.predict(test_images)
+
+print("test_images shape is {}".format(test_images.shape))
+print("test_labels shape is {}".format(test_labels.shape))
+print("predictions shape is {}".format(predictions.shape))
+
+
+def plot_img(x, true_images, true_labels, model_predictions):
+    true_image = true_images[x]
+    true_label = true_labels[x]
+    prediction = model_predictions[x]
+
+    predicted_value = np.max(prediction)
+    predicted_label = np.argmax(prediction)
+
+    predicted_class = class_names[predicted_label]
+    true_class = class_names[true_label]
+
+    plt.xticks([])
+    plt.yticks([])
+
+    if true_label == predicted_label:
+        color = 'blue'
+    else:
+        color = 'red'
+
+    plt.xlabel("{} {:2.0f}% ({})".format(predicted_class, 100 * predicted_value, true_class),
+               color=color)
+
+    plt.imshow(true_image.reshape((28, 28)), cmap=plt.cm.binary)
+
+
+def plot_label_bar(x, true_labels, model_predictions):
+    true_label = true_labels[x]
+    prediction = model_predictions[x]
+
+    predicted_label = np.argmax(prediction)
+    plt.ylim([0, 1])
+
+    plt.xticks(range(10))
+    plt.yticks([])
+
+    result_plt = plt.bar(range(10), prediction, color='#777777')
+    result_plt[predicted_label].set_color('red')
+    result_plt[true_label].set_color('blue')
+
+
+no_of_rows = 5
+no_of_columns = 3
+no_of_images = no_of_rows * no_of_columns
+
+plt.figure(figsize=(2 * 2 * no_of_columns, 2 * no_of_rows))
+
+for i in range(no_of_images):
+    plt.subplot(no_of_rows, 2 * no_of_columns, 2 * i + 1)
+    plot_img(i, test_images, test_labels, predictions)
+
+    plt.subplot(no_of_rows, 2 * no_of_columns, 2 * i + 2)
+    plot_label_bar(i, test_labels, predictions)
+
+plt.show()
