@@ -1,16 +1,18 @@
-# regression machine learning model
+# regression based machine learning model
 # supervised
 # algorithm is 'f = 1.8 * c + 32'
 
-# step 1 is importing dependencies and setting tensorflow logging level to ERROR
+# step 1 is importing dependencies
 
 from __future__ import absolute_import, division, print_function, unicode_literals
+
 import tensorflow as tf
 import numpy as np
 import matplotlib.pyplot as plt
 import logging as log
 
 tf.get_logger().setLevel(log.ERROR)
+print("tensorflow version is {}".format(tf.__version__))
 
 # step 2 is setting up the training dataset
 
