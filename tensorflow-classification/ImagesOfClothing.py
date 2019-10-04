@@ -81,7 +81,10 @@ print("test accuracy % is {:.2f}".format(test_accuracy * 100))
 
 # step 10 is predict image class and explore
 for test_images, test_labels in testing_dataset.take(1):
+    # before, test_images type is tensorflow.python.framework.ops.EagerTensor
     test_images = test_images.numpy()
+    # after, test_images type is numpy.ndarray
+
     test_labels = test_labels.numpy()
     predictions = model.predict(test_images)
 
@@ -125,9 +128,9 @@ def plot_label_bar(x, true_labels, model_predictions):
     plt.xticks(range(10))
     plt.yticks([])
 
-    result_plt = plt.bar(range(10), prediction, color='#777777')
-    result_plt[predicted_label].set_color('red')
-    result_plt[true_label].set_color('blue')
+    bar_plt = plt.bar(range(10), prediction, color='#777777')
+    bar_plt[predicted_label].set_color('red')
+    bar_plt[true_label].set_color('blue')
 
 
 no_of_rows = 5
