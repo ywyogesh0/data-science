@@ -1,4 +1,4 @@
-# binary classification based machine learning model using CNNs without image augmentation - color images (3D)
+# binary classification based machine learning model using CNNs with image augmentation and dropout - color images (3D)
 # supervised
 
 # CNNs is Convolutional Neural Networks
@@ -18,6 +18,7 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras import Sequential
 from tensorflow.keras.layers import Dense
 from tensorflow.keras.layers import Flatten
+from tensorflow.keras.layers import Dropout
 from tensorflow.keras.layers import Conv2D
 from tensorflow.keras.layers import MaxPool2D
 
@@ -74,7 +75,15 @@ BATCH_SIZE = 100
 IMG_SHAPE = 150
 
 # step 4 is data preparation
-train_img_generator = ImageDataGenerator(rescale=1. / 255)
+train_img_generator = ImageDataGenerator(rescale=1. / 255,
+                                         horizontal_flip=True,
+                                         rotation_range=45,
+                                         zoom_range=0.5,
+                                         height_shift_range=0.2,
+                                         width_shift_range=0.3,
+                                         shear_range=0.5,
+                                         fill_mode='nearest')
+
 validation_img_generator = ImageDataGenerator(rescale=1. / 255)
 
 train_img_dataset = train_img_generator.flow_from_directory(batch_size=BATCH_SIZE,
@@ -89,19 +98,20 @@ validation_img_dataset = validation_img_generator.flow_from_directory(batch_size
                                                                       target_size=(IMG_SHAPE, IMG_SHAPE),
                                                                       class_mode='binary')
 
+
 # train_img_dataset and validation_img_dataset type is 'keras_preprocessing.image.directory_iterator.DirectoryIterator'
 
-sample_train_images, _ = next(train_img_dataset)
-sample_train_images = sample_train_images[:5]
 
-fig, axes = plt.subplots(1, 5, figsize=(20, 10))
-axes = axes.flatten()
+def plot_img(images_array):
+    fig, axes = plt.subplots(1, 5, figsize=(20, 10))
+    axes = axes.flatten()
+    for img, ax in zip(images_array, axes):
+        ax.imshow(img)
+    plt.tight_layout()
+    plt.show()
 
-for img, ax in zip(sample_train_images, axes):
-    ax.imshow(img)
 
-plt.tight_layout()
-plt.show()
+plot_img([train_img_dataset[0][0][0] for i in range(5)])
 
 # step 5 is build the model
 model = Sequential([
@@ -113,6 +123,7 @@ model = Sequential([
     MaxPool2D((2, 2), strides=2),
     Conv2D(128, (3, 3), padding='same', activation=tf.nn.relu),
     MaxPool2D((2, 2), strides=2),
+    Dropout(0.5),
     Flatten(),
     Dense(512, activation=tf.nn.relu),
     Dense(2, activation=tf.nn.softmax)
@@ -128,7 +139,7 @@ model.summary()
 
 # step 8 is train the model
 
-EPOCHS = 5
+EPOCHS = 100
 # after 5 epochs, model has started to memorize instead of generalize on training dataset
 
 history = model.fit_generator(train_img_dataset,
@@ -153,5 +164,5 @@ plt.plot(epoch_range, history.history['val_loss'], label='Validation Loss')
 plt.legend(loc='upper right')
 plt.title('Training and Validation Loss')
 
-plt.savefig('./dogs_and_cats_image_classification_using_cnn.png')
+plt.savefig('./augmented_dogs_and_cats_image_classification_using_cnn.png')
 plt.show()
