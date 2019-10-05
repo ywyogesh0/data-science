@@ -164,5 +164,5 @@ plt.plot(epoch_range, history.history['val_loss'], label='Validation Loss')
 plt.legend(loc='upper right')
 plt.title('Training and Validation Loss')
 
-plt.savefig('./augmented_dogs_and_cats_image_classification_using_cnn.png')
+plt.savefig('images/augmented_dogs_and_cats_image_classification_using_cnn.png')
 plt.show()
