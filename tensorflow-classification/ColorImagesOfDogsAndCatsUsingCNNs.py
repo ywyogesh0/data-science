@@ -89,7 +89,7 @@ validation_img_dataset = validation_img_generator.flow_from_directory(batch_size
                                                                       target_size=(IMG_SHAPE, IMG_SHAPE),
                                                                       class_mode='binary')
 
-# train_img_dataset and validation_img_dataset type is 'keras_preprocessing.image.directory_iterator.DirectoryIterator'
+# dataset type is <class 'keras_preprocessing.image.directory_iterator.DirectoryIterator'>
 
 sample_train_images, _ = next(train_img_dataset)
 sample_train_images = sample_train_images[:5]

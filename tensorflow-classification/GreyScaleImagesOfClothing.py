@@ -21,6 +21,8 @@ dataset, metadata = tfds.load('fashion_mnist', as_supervised=True, with_info=Tru
 training_dataset = dataset['train']
 testing_dataset = dataset['test']
 
+# dataset type is <class 'tensorflow.python.data.ops.dataset_ops._OptionsDataset'>
+
 class_names = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat',
                'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
 
@@ -38,6 +40,8 @@ def normalize(image, label):
 
 training_dataset = training_dataset.map(normalize)
 testing_dataset = testing_dataset.map(normalize)
+
+# after map, dataset type is <class 'tensorflow.python.data.ops.dataset_ops.MapDataset'>
 
 # step 5 is exploring the processed dataset
 plt.figure(figsize=(10, 10))
@@ -71,6 +75,8 @@ BATCH_SIZE = 32
 training_dataset = training_dataset.repeat().shuffle(training_num_examples).batch(BATCH_SIZE)
 testing_dataset = testing_dataset.batch(BATCH_SIZE)
 
+# after batching, dataset type is <class 'tensorflow.python.data.ops.dataset_ops.BatchDataset'>
+
 history = model.fit(training_dataset, epochs=5, steps_per_epoch=math.ceil(training_num_examples / BATCH_SIZE))
 print("Finished Model Training...")
 
@@ -81,11 +87,13 @@ print("test accuracy % is {:.2f}".format(test_accuracy * 100))
 
 # step 10 is predict image class and explore
 for test_images, test_labels in testing_dataset.take(1):
-    # before, test_images type is tensorflow.python.framework.ops.EagerTensor
-    test_images = test_images.numpy()
-    # after, test_images type is numpy.ndarray
+    # before, test_images and test_labels type is <class 'tensorflow.python.framework.ops.EagerTensor'>
 
+    test_images = test_images.numpy()
     test_labels = test_labels.numpy()
+
+    # after, test_images and test_labels type is <class 'numpy.ndarray'>
+
     predictions = model.predict(test_images)
 
 print("test_images shape is {}".format(test_images.shape))

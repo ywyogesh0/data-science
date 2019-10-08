@@ -99,7 +99,7 @@ validation_img_dataset = validation_img_generator.flow_from_directory(batch_size
                                                                       class_mode='binary')
 
 
-# train_img_dataset and validation_img_dataset type is 'keras_preprocessing.image.directory_iterator.DirectoryIterator'
+# dataset type is <class 'keras_preprocessing.image.directory_iterator.DirectoryIterator'>
 
 
 def plot_img(images_array):

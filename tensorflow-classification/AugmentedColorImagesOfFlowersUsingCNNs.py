@@ -87,6 +87,9 @@ validation_img_dataset = validation_img_gen.flow_from_directory(batch_size=BATCH
                                                                 class_mode='sparse')
 
 
+# dataset type is <class 'keras_preprocessing.image.directory_iterator.DirectoryIterator'>
+
+
 # visualizing the data
 def plot_img(img_array):
     fig, axes = plt.subplots(1, 5, figsize=(20, 10))
