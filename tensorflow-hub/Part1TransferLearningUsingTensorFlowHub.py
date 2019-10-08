@@ -46,13 +46,13 @@ grace_hopper_img_path = tf.keras.utils.get_file('grace_hopper.jpg', origin=IMG_U
 grace_hopper_img = Image.open(grace_hopper_img_path).resize((IMG_SHAPE, IMG_SHAPE))
 
 # type(img_arr) - <class 'numpy.ndarray'> - (224, 224, 3)
-img_arr = np.array(grace_hopper_img) / 255
+img_arr = np.array(grace_hopper_img) / 255.0
 
 # model prediction after adding batch dimension - (1, 224, 224, 3)
 
 # type(result) - <class 'numpy.ndarray'> - (1, 1001)
 result = model.predict(img_arr[np.newaxis, ...])
-print(result)
+print(result.shape)
 
 # result is a 1001 element vector of logits, rating the probability of each class for the image.
 

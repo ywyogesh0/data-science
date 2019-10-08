@@ -38,7 +38,7 @@ print("training examples count is {}, testing examples count is {}".format(train
 
 # step 4 is pre-processing the data in the dataset
 def normalize(image, label):
-    return (tf.cast(image, tf.float32) / 255), label
+    return (tf.cast(image, tf.float32) / 255.0), label
 
 
 training_dataset = training_dataset.map(normalize)
