@@ -128,7 +128,7 @@ model.summary()
 
 # step 8 is train the model
 
-EPOCHS = 5
+EPOCHS = 100
 # after 5 epochs, model has started to memorize instead of generalize on training dataset
 
 history = model.fit_generator(train_img_dataset,

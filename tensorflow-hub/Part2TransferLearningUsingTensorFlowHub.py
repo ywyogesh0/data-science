@@ -23,7 +23,7 @@ tfds.disable_progress_bar()
 print(tf.__version__)
 
 # ********************************
-# part-2 : using tensorflow hub model for cats vs dogs prediction (image classification)
+# part-2 : using tensorflow hub 'MobileNet' model for cats vs dogs prediction (image classification)
 # *********************************
 
 dataset_splits, metadata = tfds.load('cats_vs_dogs',
@@ -43,7 +43,7 @@ print("labels count is {}".format(num_of_classes))
 
 for i, train_data in enumerate(train_dataset.take(3)):
     # train_data type is <class 'tuple'>, length is 2
-    # tuple values type is <class 'tensorflow.python.framework.ops.EagerTensor'>
+    # each tuple value type is <class 'tensorflow.python.framework.ops.EagerTensor'>
 
     print("Image {} Shape is {}".format(i + 1, train_data[0].shape))
 
@@ -82,11 +82,10 @@ MOBILE_NET_LABELS_URL = "https://storage.googleapis.com/download.tensorflow.org/
 mobile_net_labels_file_path = tf.keras.utils.get_file('ImageNetLabels.txt', origin=MOBILE_NET_LABELS_URL)
 
 label_names_arr = np.array(open(mobile_net_labels_file_path).read().splitlines())[result_index_arr]
-print(label_names_arr)
 
-plt.figure(figsize=(10, 9))
+plt.figure(figsize=(15, 10))
 for i in range(32):
-    plt.subplot(7, 5, i + 1)
+    plt.subplot(5, 7, i + 1)
     plt.subplots_adjust(hspace=0.3)
     plt.imshow(train_data_img[i])
     plt.title(label_names_arr[i])
