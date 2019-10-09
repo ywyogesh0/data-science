@@ -19,10 +19,11 @@ import tensorflow_datasets as tfds
 import tensorflow_hub as hub
 import matplotlib.pyplot as plt
 import logging as log
+import os
 
 from PIL import Image
 
-tf.get_logger().setLevel(log.ERROR)
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 tfds.disable_progress_bar()
 
 print(tf.__version__)
@@ -72,7 +73,7 @@ def img_resize(img, label):
     return img, label
 
 
-train_data_batches = train_dataset.shuffle(num_train_data_examples).map(img_resize).batch(BATCH_SIZE).prefetch(
+train_data_batches = train_dataset.repeat().shuffle(num_train_data_examples).map(img_resize).batch(BATCH_SIZE).prefetch(
     1)
 validation_data_batches = validation_dataset.map(img_resize).batch(BATCH_SIZE).prefetch(1)
 
@@ -140,7 +141,6 @@ plt.savefig('images/transfer_learning_dogs_and_cats_using_mobile_net_module.png'
 plt.show()
 
 result = model.predict(train_data_img)
-print(result)
 # result shape is (32, 2)
 
 result_data_label = np.argmax(result, axis=-1)

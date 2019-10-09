@@ -14,10 +14,11 @@ import tensorflow_datasets as tfds
 import tensorflow_hub as hub
 import matplotlib.pyplot as plt
 import logging as log
+import os
 
 from PIL import Image
 
-tf.get_logger().setLevel(log.ERROR)
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 tfds.disable_progress_bar()
 
 print(tf.__version__)
