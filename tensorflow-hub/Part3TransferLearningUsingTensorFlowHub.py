@@ -72,7 +72,7 @@ def img_resize(img, label):
     return img, label
 
 
-train_data_batches = train_dataset.repeat().shuffle(num_train_data_examples).map(img_resize).batch(BATCH_SIZE).prefetch(
+train_data_batches = train_dataset.shuffle(num_train_data_examples).map(img_resize).batch(BATCH_SIZE).prefetch(
     1)
 validation_data_batches = validation_dataset.map(img_resize).batch(BATCH_SIZE).prefetch(1)
 
